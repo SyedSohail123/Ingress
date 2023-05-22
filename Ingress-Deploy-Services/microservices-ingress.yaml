@@ -1,0 +1,33 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microserv-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: prefix
+            path: /identity(/|$)(.*)
+            backend:
+              service: 
+                name: identity-svc
+          - pathType: prefix
+            path: /order(/|$)(.*)
+            backend:
+              service: 
+                name: order-svc
+          - pathType: prefix
+            path: /catalog(/|$)(.*)
+            backend:
+              service: 
+                name: catalog-svc
+          - pathType: prefix
+            path: /basket(/|$)(.*)
+            backend:
+              service: 
+                name: basket-svc
+          
